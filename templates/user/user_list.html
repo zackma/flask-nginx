@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+    <script type="text/javascript" src="/static/js/jquery/jquery.min.js"></script>
+</head>
+<body>
+    <div id="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $.ajax({
+            type:'post',
+            url:'/userList',
+            data:JSON.stringify({}),
+            async:false,
+            cache:false,
+            success:function(d){
+                d = JSON.parse(d);
+                if(d.success){
+                    var rst = d.data;
+                    $("#container table tbody").html('');
+                    for(var i=0;i<rst.length;i++){
+                        $("#container table tbody").append('<tr><td>'+rst[i].name+'</td><td>'+rst[i].email+'</td></tr>');
+                    }
+                }
+            },
+            error:function(e){
+                console.log(e);
+            }
+
+        });
+    });
+</script>
+</html>
